@@ -1,0 +1,86 @@
+name: Create Baby Vibra Project Board
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_project:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create GitHub Project
+        uses: peter-evans/create-project@v2
+        id: project
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Baby Vibra Kanban
+
+      - name: Add Columns
+        uses: peter-evans/create-project-column@v1
+        id: todo
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          project-number: ${{ steps.project.outputs.project_number }}
+          name: To Do
+
+      - name: Add Doing Column
+        uses: peter-evans/create-project-column@v1
+        id: doing
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          project-number: ${{ steps.project.outputs.project_number }}
+          name: Doing
+
+      - name: Add Done Column
+        uses: peter-evans/create-project-column@v1
+        id: done
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          project-number: ${{ steps.project.outputs.project_number }}
+          name: Done
+
+      - name: Create Cards in To-Do
+        uses: peter-evans/create-project-card@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          column-id: ${{ steps.todo.outputs.column_id }}
+          note: |
+            🔵 Set up landing page: login/register UI
+            🔵 Add user authentication flow (Supabase Auth)
+            🔵 Add session persistence (localStorage token)
+            🔵 Dashboard: display V Points + Video Pass count
+            🔵 Transfer Points page (user → user)
+            🔵 Validate usernames before transfer
+            🔵 Supabase function: transfer points
+            🔵 Exchange / Withdrawal request page
+            🔵 Admin Deskman UI: approve withdrawals
+            🔵 Admin Deskman UI: send bulk points
+            🔵 Watch Videos section
+            🔵 Give 1 Video Pass per ad viewed
+            🔵 Allow user to watch videos only when passes > 0
+            🔵 Referral page + referral link
+            🔵 Referral reward logic (10 invites → V points)
+
+      - name: Create Cards in Doing
+        uses: peter-evans/create-project-card@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          column-id: ${{ steps.doing.outputs.column_id }}
+          note: |
+            🟡 Connect Frontend ↔ Backend routes
+            🟡 Secure API routes (auth token)
+            🟡 Finalize Supabase queries
+            🟡 Admin Deskman wallet logic
+            🟡 UI polishing + modals
+
+      - name: Create Cards in Done
+        uses: peter-evans/create-project-card@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          column-id: ${{ steps.done.outputs.column_id }}
+          note: |
+            🟢 Backend set up
+            🟢 Frontend hosting working
+            🟢 Supabase tables created
+            🟢 Admin Deskman base UI complete
+            🟢 File structure organized

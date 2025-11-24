@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard — Baby Vibra</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+  <div class="max-w-3xl mx-auto p-6">
+    <header class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-bold text-green-400">Baby Vibra — Dashboard</h1>
+      <div>
+        <button id="logoutBtn" class="px-3 py-1 border border-green-400 rounded">Logout</button>
+      </div>
+    </header>
+
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="p-4 bg-gray-800 rounded">
+        <div class="text-xs text-gray-400">V-Points</div>
+        <div id="vpoints" class="text-2xl font-bold">0</div>
+      </div>
+      <div class="p-4 bg-gray-800 rounded">
+        <div class="text-xs text-gray-400">Video Passes</div>
+        <div id="video_passes" class="text-2xl font-bold">0</div>
+      </div>
+      <div class="p-4 bg-gray-800 rounded">
+        <div class="text-xs text-gray-400">Referral</div>
+        <div id="referral_code" class="text-lg font-medium break-all"></div>
+      </div>
+    </section>
+
+    <div class="flex gap-3 mb-6">
+      <a href="transfer.html" class="px-4 py-2 bg-green-500 rounded">Transfer Points</a>
+      <a href="exchange.html" class="px-4 py-2 bg-yellow-500 rounded">Request Exchange</a>
+      <button id="watchBtn" class="px-4 py-2 bg-blue-500 rounded">Watch (use Pass)</button>
+    </div>
+
+    <h3 class="mt-4 text-lg">Learn Sections</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+      <div class="p-4 bg-gray-800 rounded">Chess — Coming Soon</div>
+      <div class="p-4 bg-gray-800 rounded">Math — Coming Soon</div>
+      <div class="p-4 bg-gray-800 rounded">Coding — Coming Soon</div>
+	  <div class="p-4 bg-gray-800 rounded">Others - Coming Soon</div>
+    </div>
+
+    <p class="mt-6 text-sm text-gray-400">Desk Man (Admin) access: <a href="admin.html" class="text-green-400">Admin Panel</a> (you must set role='deskman' in profile).</p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="./js/supabaseClient.js"></script>
+  <script src="./js/auth.js"></script>
+  <script src="./js/dashboard.js"></script>
+  <script>
+    (async () => { await loadDashboard(); })();
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+    document.getElementById('watchBtn').addEventListener('click', async () => {
+      await watchVideoAction();
+    });
+  </script>
+</body>
+</html>
